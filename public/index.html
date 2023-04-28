@@ -1,429 +1,90 @@
+
 <!DOCTYPE html>
 <html>
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    /* Add a gray background color with some padding */
-    body {
-      font-family: Arial;
-      padding: 0px;
-      background: gray;
-    }
-
-
-
-    table {
-      font-family: arial, sans-serif;
-      border-collapse: collapse;
-      width: 100%;
-    }
-
-    td,
-    th {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-    }
-
-    tr:nth-child(even) {
-      background-color: #dddddd;
-    }
-
-
-
-    /* Create two unequal columns that floats next to each other */
-    /* Left column */
-    .leftcolumn {
-      float: left;
-      width: 25%;
-
-    }
-
-    /* Right column */
-    .rightcolumn {
-      float: left;
-      width: 75%;
-      padding-left: 5px;
-      /*Establecer espacio */
-    }
-
-    /* Fake image */
-    .fakeimg {
-      background-color: #aaa;
-      width: 100%;
-      /*Tamaño de la imagen */
-      padding: 50px;
-      /*área de relleno */
-    }
-
-    /* Add a card effect for articles */
-    .card {
-      background-color: white;
-      padding: 20px;
-      margin-top: 0px;
-    }
-
-    /* Clear floats after the columns */
-    .row:after {
-      content: "";
-      display: table;
-      clear: both;
-    }
-
-    /* Footer */
-    .footer {
-      padding: 20px;
-      text-align: center;
-      background: #ddd;
-      margin-top: 20px;
-    }
-
-    /* Style the buttons inside the tab */
-    .tab button {
-      display: block;
-      background-color: inherit;
-      color: black;
-      padding: 12px 12px;
-      width: 100%;
-      border: none;
-      outline: none;
-      text-align: left;
-      cursor: pointer;
-      transition: 0.3s;
-      font-size: 13px;
-    }
-
-    /* Change background color of buttons on hover */
-    .tab button:hover {
-      background-color: #F58227;
-    }
-
-    /* Create an active/current "tab button" class */
-    .tab button.active {
-      background-color: #706969;
-
-    }
-
-    .flex-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+/* Estilos */
+* {
+  box-sizing: border-box;
+}
+/*Agrega un color de fondo*/
+body {
+  font-family: Arial;
+  padding: 0px;
+  background: white;
+ 
+}
+.main {
+  margin-left: 230px; /* Same as the width of the sidenav */
+  padding: 5px 10px;
 }
 
+/*ESTILOS DE LA BARRA DEL MAIN */
+/*Barra del menú*/.sidebar {
+  height: 100%;
+  width: 230px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 16px;
+}
+/* Botones de la barra de lado */.tab button {
+  display: block;
+  color: white;
+  background-color: inherit;
+  padding: 12px 12px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 13px;
+}
+/* Color del boton cuando quiere ser seleccionado*/.tab button:hover {
+  background-color: #F58227;
+}
+/* Color del boton seleccionado*/.tab button.active {
+  background-color: #706969;
+}
+/*Subtitulo de la barra del main*/h5{
+    color: white;
+    margin-left: 20px;
+}
+/*Función "a" para los botones del menú*/.fcc-btn{
+  text-decoration: none;
+  color: white;
 
-
-    /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
-    @media screen and (max-width: 850px) {
-
-      .leftcolumn,
-      .rightcolumn {
-        width: 100%;
-        padding: 0;
-      }
-    }
-  </style>
-
-
-
-
-
-
+}
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+}
+</style>
 </head>
 
 <body>
-  <div class="row">
-    <div class="leftcolumn">
-      <div class="card" style="background-color:#333333">
-        <img src="https://cdn.worldvectorlogo.com/logos/autozone-logo.svg" height="80" width="240">
-        <h5><i>Metrics Threshold Calculator</i></h5>
-
-        <br><br><br>
-        <div class="tab">
-          <button class="tablinks" onclick="openCity(event, 'MetricsList')" id="defaultOpen">Metrics List</button>
-          <button class="tablinks" onclick="openCity(event, 'Recalculation')">Recalculation</button>
-          <button class="tablinks" onclick="openCity(event, 'YAMLStatus')">YAML Status</button>
-          <button class="tablinks" onclick="openCity(event, 'GenerateReport')">Generate Report</button>
-          <button class="tablinks" onclick="openCity(event, 'Setting')">Setting</button>
-        </div>
-      </div>
-    </div>
-
-
-
-
-    <div class="rightcolumn">
-      <div class="card">
-        <div id="MetricsList" class="tabcontent">
-
-          <h3>Metric List</h3>
-  <hr>
-  <script>
-//Opciones
-var subjectObject = {
-  "Front-end": {
-    "HTML": ["Links", "Images", "Tables", "Lists"],
-    "CSS": ["Borders", "Margins", "Backgrounds", "Float"],
-    "JavaScript": ["Variables", "Operators", "Functions", "Conditions"]    
-  },
-  "Back-end": {
-    "PHP": ["Variables", "Strings", "Arrays"],
-    "SQL": ["SELECT", "UPDATE", "DELETE"]
-  }
-}
-window.onload = function() {
-  var subjectSel = document.getElementById("subject");
-  for (var x in subjectObject) {
-    subjectSel.options[subjectSel.options.length] = new Option(x, x);
-  }
-  
-  subjectSel.onchange = function() {
-    //empty Chapters- and Topics- dropdowns
-    chapterSel.length = 1;
-    topicSel.length = 1;
-    //display correct values
-    for (var y in subjectObject[this.value]) {
-      topicSel.options[topicSel.options.length] = new Option(y, y);
-    }
-  }
-  topicSel.onchange = function() {
-    //empty Chapters dropdown
-    chapterSel.length = 1;
-    //display correct values
-    var z = subjectObject[subjectSel.value][this.value];
-    for (var i = 0; i < z.length; i++) {
-      chapterSel.options[chapterSel.options.length] = new Option(z[i], z[i]);
-    }
-  }
-}
-</script>
-</head>   
-<body>
-
-
-
-
-<select name="subject" id="subject">
-    <option value="" selected="selected">Select the service method</option>
-  </select>
-</form>
-  
-  
-  <div class="flex-row">
-      <p>London is the capital city of England.</p> 
-
-<div align="right">
-<div class="vertical-menu">
-<table class="table2">
-  <tr><th class="th2"> Week 1</th></tr>
-  <tr><td class="td2"><input type="checkbox" id="cbox2" value="second_checkbox"> Week 1</p></td></tr>
-  <tr><td class="td2"><input type="checkbox" id="cbox2" value="second_checkbox"> Week 2</p></td></tr>
-  <tr><td class="td2"><input type="checkbox" id="cbox2" value="second_checkbox"> Week 3</p></td></tr>
-  <tr><td class="td2"><input type="checkbox" id="cbox2" value="second_checkbox"> Week 4</p></td></tr>
-  <tr><td class="td2"><input type="checkbox" id="cbox2" value="second_checkbox"> Week 5</p></td></tr>
-  <tr><td class="td2"><input type="checkbox" id="cbox2" value="second_checkbox"> Week 6</p></td></tr>
-</table>
+<!--Barra del main -->
+<div class="sidebar">
+ <img src ="logoAuto.PNG" height="45" width="220"> 
+    <h5><i>Metrics Threshold Calculator</i></h5><br>
+     <div class="tab">
+      <a class="fcc-btn" href="metrics.html"><button class="tablinks" onclick="servicio(event, 'MetricsList')" id="idServicio">Metrics List</button></a>
+      <a class="fcc-btn" href="recalculation.html"><button class="tablinks" onclick="servicio(event, 'Recalculation')">Recalculation</button></a>
+      <a class="fcc-btn" href="status.html"><button class="tablinks" onclick="servicio(event, 'YAMLStatus')">YAML Status</button></a>
+      <a class="fcc-btn" href="generate.html"><button class="tablinks" onclick="servicio(event, 'GenerateReport')">Generate Report</button></a>
+      <a class="fcc-btn" href="setting.html"><button class="tablinks" onclick="servicio(event, 'Setting')">Setting</button></a>
+	 </div>
 </div>
-</div> 
-  </div>
- 
-<br>
 
-      
-<table>
-  <tr>
-    <th>Titulo</th>
-    <th>bla bla bla</th>
-    <th>Offical</th>
-    
-  </tr>
-  <tr>
-    <td>Jess</td>
-    <td>es la </td>
-    <td>best</td>
-  </tr>
-</table>
-        </div>
+<div class="main">
 
-
-
-
-        <div id="Recalculation" class="tabcontent">
-          <h3>Recalculation</h3>
-          <hr>
-          <select name="subject" id="subject">
-            <option value="" selected="selected">Select the service method</option>
-          </select>
-          </form>
-          <select name="subject" id="subject">
-            <option value="" selected="selected">Week</option>
-            <option value="">Last week</option>
-
-          </select>
-          </form>
-          <select name="subject" id="subject">
-            <option value="" selected="selected">Deviation criteria</option>
-            <option value="">4th Quartils</option>
-          </select>
-          </form>
-
-          <!-- button to recalculate -->
-          <button type="button" onclick="alert('Hello world!')">Calculate</button>
-          <button type="button" onclick="alert('Bye world!')">Compare</button>
-
-          <style>
-            /* Container for the tables */
-            .table-container {
-              display: flex;
-            }
-
-            /* Style for individual tables */
-            .table-container table {
-              width: 50%;
-              /* Set width as needed */
-              border-collapse: collapse;
-              margin-right: 10px;
-              /* Add margin for spacing */
-            }
-
-            /* Style for table cells */
-            .table-container td,
-            .table-container th {
-              border: 1px solid black;
-              padding: 8px;
-            }
-          </style>
-          </head>
-
-          <body>
-            <div class="table-container">
-              <!-- First table -->
-              <table>
-                <thead>
-                  <tr>
-                    <th> </th>
-                    <th>Green</th>
-                    <th>Red</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>0</td>
-                    <td>546.27</td>
-                    <td>464.33</td>
-
-                  </tr>
-                  <tr>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-
-                  </tr>
-                </tbody>
-              </table>
-
-              <!-- Second table -->
-
-              <table>
-                <thead>
-                  <tr>
-                    <th> </th>
-                    <th>Green</th>
-                    <th>Red</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>0</td>
-                    <td>546.27</td>
-                    <td>464.33</td>
-
-                  </tr>
-                  <tr>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-
-                  </tr>
-                </tbody>
-              </table>
-              <!-- 3rd table -->
-              <table>
-                <thead>
-                  <tr>
-                    <th> </th>
-                    <th>Green</th>
-                    <th>Red</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>0</td>
-                    <td>546.27</td>
-                    <td>464.33</td>
-
-                  </tr>
-                  <tr>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </body>
-        </div>
-
-
-
-
-        <div id="YAMLStatus" class="tabcontent">
-          <h3>Tokyo</h3>
-          <p>Tokyo is the capital of Japan.</p>
-        </div>
-
-        <div id="GenerateReport" class="tabcontent">
-          <h3>Tokyo</h3>
-          <p>Tokyo is the capital of Japan.</p>
-        </div>
-
-        <div id="Setting" class="tabcontent">
-          <h3>Setting</h3>
-          <p> Cambio calcular</p>
-        </div>
-
-        <script>
-          function openCity(evt, cityName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-              tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-              tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-          }
-
-          // Get the element with id="defaultOpen" and click on it
-          document.getElementById("defaultOpen").click();
-        </script>
-
-      </div>
-    </div>
-
-
-  </div>
-
-
+</div>
 
 </body>
-
 </html>
